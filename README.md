@@ -44,7 +44,7 @@ The non-stemmed lists (expansions of the original LIWC 2007, that contains wildc
 
 ### collaboration_processing
 
-An R script used to disambuigate collaboarations (see the preprint from the details):
+An R script used to disambuigate collaboarations in the raw data (see the preprint from the details):
 * disambiguate_collaborations.R
 
 
