@@ -1,6 +1,6 @@
 # Cultural evolution of emotional expression in 50 years of song lyrics
 
-Scripts and data associated to the preprint: "Cultural evolution of emotional expression in 50 years of song lyrics" by Alberto Acerbi, Charlotte Brand and Alex Mesoudi
+Scripts and data associated to the preprint: "Cultural evolution of emotional expression in 50 years of song lyrics" by Charlotte Brand, Alberto Acerbi, and Alex Mesoudi
 
 This repository contains the R scripts and the data to reproduce the analysis described in the preprint. 
 
