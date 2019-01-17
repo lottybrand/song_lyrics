@@ -1,0 +1,202 @@
+
+
+1) bb positive: Success (top 10 songs from previous 3 yrs) best predictor of n.positive lyrics? 
+2) bb negative: full is the best model. effects of both chart pos and prestige on n.negative lyrics
+3) mxm positive: null is the best model, perhaps data just too big/noisy to detect anything else in mxm? 
+4) mxm negative: null is the best model, perhaps data just too big/noisy to detect anything else in mxm? 
+
+Coefficients for success and prestige are surprisingly large for bb models (considering they're on the scale of each word) and understandably tiny for the mxm models.
+
+
+***********************************
+***********************************
+BB POSITIVE 
+***********************************
+
+
+MODEL COMPARISON:
+                WAIC  pWAIC dWAIC weight      SE  dSE
+bb_pos_h1   646942.5 1629.3   0.0   0.80 1677.00   NA
+bb_pos_null 646946.3 1633.8   3.8   0.12 1676.99 3.26
+bb_pos_full 646947.9 1631.3   5.4   0.05 1676.93 2.34
+bb_pos_h2   646948.8 1633.4   6.3   0.03 1677.01 2.89
+
+
+BB_POS_NULL:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.15 0.02 -3.18 -3.12   282 1.01
+sigma_a  0.56 0.01  0.54  0.57   190 1.01
+sigma_y  0.11 0.01  0.08  0.13   245 1.01
+
+BB_POS_H1:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.16 0.02 -3.19 -3.13   373 1.01
+b        0.05 0.02  0.03  0.08   311 1.00
+sigma_a  0.56 0.01  0.54  0.57   361 1.01
+sigma_y  0.10 0.01  0.08  0.12   498 1.00
+
+BB_POS_H2:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.16 0.02 -3.19 -3.12   246 1.00
+b        0.05 0.02  0.02  0.07   302 1.01
+sigma_a  0.56 0.01  0.54  0.58   486 1.01
+sigma_y  0.10 0.01  0.08  0.12   474 1.01
+
+BB_POS_FULL:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.16 0.02 -3.19 -3.12   335    1
+bs       0.04 0.02  0.00  0.07   344    1
+bp       0.02 0.02 -0.01  0.06   419    1
+sigma_a  0.56 0.01  0.54  0.57   388    1
+sigma_y  0.10 0.01  0.08  0.12   443    1
+
+
+
+***********************************
+***********************************
+BB NEGATIVE:
+***********************************
+
+MODEL COMPARISON:
+                WAIC  pWAIC dWAIC weight      SE  dSE
+bb_neg_full 359466.4 1457.0   0.0   0.96 1442.21   NA
+bb_neg_h3   359472.8 1460.6   6.4   0.04 1442.17 2.89
+bb_neg_null 359482.2 1460.2  15.8   0.00 1442.19 7.84
+bb_neg_h1   359488.9 1461.4  22.6   0.00 1442.21 7.81
+bb_neg_h2   359493.1 1462.0  26.8   0.00 1442.20 7.75
+
+
+BB_NEG_NULL:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -4.19 0.03 -4.25 -4.14   264    1
+sigma_a  0.76 0.02  0.73  0.79   302    1
+sigma_y  0.19 0.02  0.15  0.22   449    1
+
+BB_NEG_H1:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -4.20 0.03 -4.25 -4.14   140 1.02
+b        0.06 0.03  0.02  0.10   211 1.01
+sigma_a  0.76 0.02  0.73  0.78   234 1.00
+sigma_y  0.18 0.02  0.15  0.22   398 1.00
+
+BB_NEG_H2: 
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -4.19 0.03 -4.24 -4.13   200 1.04
+b        0.08 0.03  0.04  0.13   330 1.02
+sigma_a  0.76 0.02  0.73  0.78   365 1.01
+sigma_y  0.17 0.02  0.15  0.21   507 1.01
+
+BB_NEG_H3:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -4.20 0.03 -4.25 -4.14   265 1.02
+b       -0.02 0.01 -0.03 -0.01  1800 1.00
+sigma_a  0.76 0.02  0.73  0.78   354 1.01
+sigma_y  0.19 0.02  0.15  0.22   408 1.01
+
+BB_NEG_FULL:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -4.19 0.03 -4.24 -4.14   293 1.00
+bs       0.01 0.04 -0.05  0.07   434 1.01
+bp       0.08 0.04  0.01  0.14   318 1.01
+bc      -0.02 0.01 -0.04 -0.01  1800 1.00
+sigma_a  0.76 0.02  0.73  0.78   367 1.00
+sigma_y  0.18 0.02  0.15  0.21   662 1.00
+
+
+
+
+***********************************
+***********************************
+MXM POSITIVE
+***********************************
+
+
+MODEL COMPARISON:
+                WAIC  pWAIC dWAIC weight      SE  dSE
+mxm_pos_null 9481478 9388.5   0.0      1 6651.86   NA
+mxm_pos_h2   9481502 9394.0  24.5      0 6651.80 5.07
+mxm_pos_h1   9481503 9397.8  25.2      0 6651.80 4.73
+mxm_pos_full 9481518 9399.9  39.8      0 6651.89 5.04
+
+
+MXM_POS_NULL:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.25 0.02 -3.29 -3.22  1800 1.00
+sigma_a  0.38 0.00  0.38  0.39    94 1.03
+sigma_g  0.23 0.02  0.20  0.27  1062 1.00
+sigma_y  0.03 0.00  0.02  0.03  1800 1.00
+
+MXM_POS_H1:
+          mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.26 0.02 -3.29 -3.22  1800 1.00
+b        0.01 0.00  0.00  0.01   417 1.01
+sigma_a  0.38 0.00  0.38  0.39   371 1.01
+sigma_g  0.23 0.02  0.20  0.27   753 1.00
+sigma_y  0.03 0.00  0.02  0.03  1800 1.00
+
+MXM_POS_H2:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.26 0.02 -3.29 -3.22  1800 1.00
+b        0.01 0.00  0.00  0.01   446 1.01
+sigma_a  0.38 0.00  0.38  0.39   269 1.00
+sigma_g  0.23 0.02  0.20  0.27   978 1.00
+sigma_y  0.03 0.00  0.02  0.03  1800 1.00
+
+MXM_POS_FULL:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.26 0.02 -3.29 -3.22  1800 1.00
+bs       0.00 0.01 -0.01  0.01   376 1.02
+bp       0.01 0.01  0.00  0.02   617 1.01
+sigma_a  0.38 0.00  0.37  0.39   280 1.01
+sigma_g  0.23 0.02  0.20  0.27   814 1.00
+sigma_y  0.03 0.00  0.02  0.03  1800 1.01
+
+
+
+
+***********************************
+***********************************
+MXM NEGATIVE
+***********************************
+
+MODEL COMPARISON:
+                WAIC  pWAIC dWAIC weight      SE  dSE
+mxm_neg_null 6602738 9361.2   0.0      1 6057.61   NA
+mxm_neg_h2   6602754 9365.0  15.8      0 6057.52 4.62
+mxm_neg_h1   6602763 9369.7  24.8      0 6057.55 4.78
+mxm_neg_full 6602787 9380.7  48.6      0 6057.53 4.62
+
+
+MXM_NEG_NULL:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.92 0.03 -3.97 -3.88  1800 1.00
+sigma_a  0.53 0.00  0.52  0.54   288 1.01
+sigma_g  0.30 0.02  0.27  0.35  1126 1.00
+sigma_y  0.03 0.00  0.03  0.04  1800 1.00
+
+MXM_NEG_H1:
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.92 0.03 -3.97 -3.88  1800 1.00
+b        0.00 0.01 -0.01  0.01   627 1.00
+sigma_a  0.53 0.00  0.52  0.54   278 1.01
+sigma_g  0.30 0.03  0.27  0.35   847 1.00
+sigma_y  0.03 0.00  0.03  0.04  1800 1.00
+
+MXM_NEG_H2: 
+mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.92 0.03 -3.97 -3.88  1800 1.00
+b        0.00 0.01 -0.01  0.00   725 1.00
+sigma_a  0.53 0.00  0.52  0.54   335 1.01
+sigma_g  0.31 0.03  0.27  0.35   894 1.00
+sigma_y  0.03 0.00  0.03  0.04  1800 1.00
+
+MXM_NEG_FULL:
+          mean   sd  5.5% 94.5% n_eff Rhat
+a       -3.92 0.03 -3.97 -3.87  1800 1.00
+bs       0.00 0.01 -0.01  0.01   898 1.00
+bp       0.00 0.01 -0.02  0.01   773 1.00
+sigma_a  0.53 0.00  0.52  0.54   239 1.01
+sigma_g  0.31 0.03  0.27  0.35   940 1.00
+sigma_y  0.03 0.00  0.03  0.04  1800 1.00
+
+

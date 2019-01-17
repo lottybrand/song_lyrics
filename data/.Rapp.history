@@ -1,0 +1,2 @@
+load("/Users/albertoacerbi/Dropbox/ongoing_projects/1_billboard/clean/output/data/m3g_MODEL.rds")
+load("/Users/albertoacerbi/Dropbox/ongoing_projects/1_billboard/clean/output/data/M3Mod.rds")
