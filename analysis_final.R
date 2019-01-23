@@ -140,7 +140,7 @@ bb_pos_full <- map2stan(
   constraints=list(sigma_y="lower=0", sigma_a="lower=0"), control=list( adapt_delta=0.99, max_treedepth=13))
 
 print("finished Full")
-plot(precis(bb_pos_full), pars=c("bs","bp"), labels=c("Prestige","Success"))
+plot(precis(bb_pos_full), pars=c("bs","bp"), labels=c("Prestige","Success"), xlab="Estimate")
 ############################################################
 # NEGATIVE EMOTIONS
 
@@ -226,7 +226,7 @@ bb_neg_full <- map2stan(
 print("finished neg Full")
 
 precis(bb_neg_full)
-plot(precis(bb_neg_full), pars=c("bs","bp","bc"), labels=c("Chart Position","Prestige","Success"))
+plot(precis(bb_neg_full), pars=c("bs","bp","bc"), labels=c("Chart Position","Prestige","Success"), xlab="Estimate")
 
 
 ########################################################
@@ -354,7 +354,7 @@ mxm_pos_full <- map2stan(
   constraints=list(sigma_a="lower=0", sigma_g="lower=0", sigma_y="lower=0"), control=list( adapt_delta=0.99 , max_treedepth=13 ))
 origFin<- Sys.time()
 
-plot(precis(mxm_pos_full), pars=c("bs","bp"), labels=c("Prestige","Success"))
+plot(precis(mxm_pos_full), pars=c("bs","bp"), labels=c("Prestige","Success"), xlab="Estimate")
 #####################################################
 # NEGATIVE EMOTIONS
 
@@ -436,6 +436,6 @@ mxm_neg_full <- map2stan(
 origFin3<-Sys.time()
 
 print("finished mxm_neg_full")
-plot(precis(mxm_neg_full), pars=c("bs","bp"), labels=c("Prestige","Success"))
+plot(precis(mxm_neg_full), pars=c("bs","bp"), labels=c("Prestige","Success"), xlab="Estimate")
 #####
 
