@@ -59,14 +59,31 @@ movingAverage = as.vector(filter(prestFreq, rep(1/3, 3), sides=1))
 prestige_merge_positive = data.frame(year=unique(bb$year), prestige_positive=c(NA, movingAverage[1:50]))
 bb = merge(bb, prestige_merge_positive, by="year")
 
+### SALLY'S SUGGESTION ###
+# average negative score for all previous three years:
+aveLyrics <- aggregate(bb$nLyrics, list(bb$year), mean, na.rm=T)
+avePrevious <- aggregate(bb$negative, list(bb$year), mean, na.rm=T)
+aveFreq <- avePrevious$x / aveLyrics$x
+movingAverage = as.vector(filter(aveFreq, rep(1/3, 3), sides=1))
+avePrevious_merge_negative = data.frame(year=unique(bb$year), avePrevious_negative = c(NA, movingAverage[1:50]))
+bb = merge(bb, avePrevious_merge_negative, by="year")
+
+# average positive score for all previous three years:
+aveLyrics <- aggregate(bb$nLyrics, list(bb$year), mean, na.rm=T)
+avePrevious <- aggregate(bb$positive, list(bb$year), mean, na.rm=T)
+aveFreq <- avePrevious$x / aveLyrics$x
+movingAverage = as.vector(filter(aveFreq, rep(1/3, 3), sides=1))
+avePrevious_merge_positive = data.frame(year=unique(bb$year), avePrevious_positive = c(NA, movingAverage[1:50]))
+bb = merge(bb, avePrevious_merge_positive, by="year")
+
+
 ########################################################
 # bb dataset models:
 
 d_bb <- na.omit(bb)
 
-#use own re-indexing code: 
+# use own reindex code
 #d_bb$artist <- coerce_index(as.factor(d_bb$artist))
-
 
 Nartist = length(unique(d_bb$artist))
 Oldartist <- d_bb$artist
@@ -76,15 +93,15 @@ for (index in 1:Nartist){
 }
 d_bb$artistID <- artistID
 
-
 d_bb$year <- coerce_index(as.factor(d_bb$year))
-
 
 d_bb$success_positive <- scale(d_bb$success_positive, center = TRUE, scale = TRUE)
 d_bb$prestige_positive <- scale(d_bb$prestige_positive, center = TRUE, scale = TRUE)
 d_bb$chart_pos <- scale(d_bb$chartPos, center = TRUE, scale = TRUE)
 d_bb$success_negative <- scale(d_bb$success_negative, center = TRUE, scale = TRUE)
 d_bb$prestige_negative <- scale(d_bb$prestige_negative, center = TRUE, scale = TRUE)
+d_bb$avePrevious_negative <- scale(d_bb$avePrevious_negative, center = TRUE, scale = TRUE)
+d_bb$avePrevious_positive <- scale(d_bb$avePrevious_positive, center = TRUE, scale = TRUE)
 
 # POSITIVE EMOTIONS
 
@@ -94,7 +111,7 @@ bb_pos_null <- map2stan(
     positive ~ dbinom(nLyrics, p),
     logit(p) <- a + z_a[artistID]*sigma_a + z_y[year]*sigma_y,
     a ~ dnorm(0,1),
-    z_a[artistID] ~ dnorm(0,1),
+    z_a[artist] ~ dnorm(0,1),
     z_y[year] ~ dnorm(0,1),
     c(sigma_a, sigma_y) ~ normal(0,0.1)
   ),
@@ -108,10 +125,10 @@ bb_pos_h1 <- map2stan(
   alist(
     positive ~ dbinom(nLyrics, p),
     logit(p) <- a + success_positive*b +
-      z_a[artist]*sigma_a + z_y[year]*sigma_y,
+      z_a[artistID]*sigma_a + z_y[year]*sigma_y,
     a ~ dnorm(0,1),
     b ~ dnorm(0,1),
-    z_a[artist] ~ dnorm(0,1),
+    z_a[artistID] ~ dnorm(0,1),
     z_y[year] ~ dnorm(0,1),
     c(sigma_a, sigma_y) ~ normal(0,0.1)
   ),
@@ -125,10 +142,10 @@ bb_pos_h2 <- map2stan(
   alist(
     positive ~ dbinom(nLyrics, p),
     logit(p) <- a + prestige_positive*b +
-      z_a[artist]*sigma_a + z_y[year]*sigma_y,
+      z_a[artistID]*sigma_a + z_y[year]*sigma_y,
     a ~ dnorm(0,1),
     b ~ dnorm(0,1),
-    z_a[artist] ~ dnorm(0,1),
+    z_a[artistID] ~ dnorm(0,1),
     z_y[year] ~ dnorm(0,1),
     c(sigma_a, sigma_y) ~ normal(0,0.1)
   ),
@@ -141,12 +158,13 @@ print("finished H2")
 bb_pos_full <- map2stan(
   alist(
     positive ~ dbinom(nLyrics, p),
-    logit(p) <- a + success_positive*bs + prestige_positive*bp +  
-      z_a[artist]*sigma_a + z_y[year]*sigma_y,
+    logit(p) <- a + success_positive*bs + prestige_positive*bp + avePrevious_positive*ba +
+      z_a[artistID]*sigma_a + z_y[year]*sigma_y,
     a ~ dnorm(0,1),
     bs ~ dnorm(0,1),
     bp ~ dnorm(0,1),
-    z_a[artist] ~ dnorm(0,1),
+    ba ~ dnorm(0,1),
+    z_a[artistID] ~ dnorm(0,1),
     z_y[year] ~ dnorm(0,1),
     c(sigma_a, sigma_y) ~ normal(0,0.1)
   ),
@@ -225,13 +243,14 @@ print("finished neg H3")
 bb_neg_full <- map2stan(
   alist(
     negative ~ dbinom(nLyrics, p),
-    logit(p) <- a + success_negative*bs + prestige_negative*bp + chart_pos*bc + 
-      z_a[artist]*sigma_a + z_y[year]*sigma_y,
+    logit(p) <- a + success_negative*bs + prestige_negative*bp + chart_pos*bc + avePrevious_negative*bna + 
+      z_a[artistID]*sigma_a + z_y[year]*sigma_y,
     a ~ dnorm(0,1),
     bs ~ dnorm(0,1),
     bp ~ dnorm(0,1),
     bc ~ dnorm(0,1),
-    z_a[artist] ~ dnorm(0,1),
+    bna ~ dnorm(0,1),
+    z_a[artistID] ~ dnorm(0,1),
     z_y[year] ~ dnorm(0,1),
     c(sigma_a, sigma_y) ~ normal(0,0.1)
   ),
@@ -257,6 +276,9 @@ mxm = merge(mxm, success_merge_positive, by="year")
 
 mxm = merge(mxm, prestige_merge_negative, by="year")
 mxm = merge(mxm, prestige_merge_positive, by="year")
+
+mxm = merge(mxm, avePrevious_merge_negative, by="year")
+mxm = merge(mxm, avePrevious_merge_positive, by="year")
 
 
 d_mxm <- na.omit(mxm)
@@ -297,6 +319,8 @@ d_mxm$success_positive <- scale(d_mxm$success_positive, center = TRUE, scale = T
 d_mxm$prestige_positive <- scale(d_mxm$prestige_positive, center = TRUE, scale = TRUE)
 d_mxm$success_negative <- scale(d_mxm$success_negative, center = TRUE, scale = TRUE)
 d_mxm$prestige_negative <- scale(d_mxm$prestige_negative, center = TRUE, scale = TRUE)
+d_mxm$avePrevious_positive <- scale(d_mxm$avePrevious_positive, center = TRUE, scale = TRUE)
+d_mxm$avePrevious_negative <- scale(d_mxm$avePrevious_negative, center = TRUE, scale = TRUE)
 
 ############################################################
 
@@ -354,11 +378,12 @@ origStart <-Sys.time()
 mxm_pos_full <- map2stan(
   alist(
     positive ~ dbinom(nLyrics, p),
-    logit(p) <- success_positive*bs + prestige_positive*bp +
+    logit(p) <- success_positive*bs + prestige_positive*bp + avePrevious_positive*ba +
       z_a[artist]*sigma_a + z_g[genre]+ z_y[year],
     a ~ dnorm(0,1),
     bs ~ dnorm(0,1),
     bp ~ dnorm(0,1),
+    ba ~ dnorm(0,1),
     z_a[artist] ~ dnorm(0,1),
     z_g[genre] ~ dnorm(a,sigma_g),
     z_y[year] ~ dnorm(0,sigma_y),
@@ -435,11 +460,12 @@ origStart3 <- Sys.time()
 mxm_neg_full <- map2stan(
   alist(
     negative ~ dbinom(nLyrics, p),
-    logit(p) <- success_negative*bs + prestige_negative*bp +
+    logit(p) <- success_negative*bs + prestige_negative*bp + avePrevious_negative*bna +
       z_a[artist]*sigma_a + z_g[genre]+ z_y[year],
     a ~ dnorm(0,1),
     bs ~ dnorm(0,1),
     bp ~ dnorm(0,1),
+    bna ~ dnorm(0,1),
     z_a[artist] ~ dnorm(0,1),
     z_g[genre] ~ dnorm(a,sigma_g),
     z_y[year] ~ dnorm(0,sigma_y),
