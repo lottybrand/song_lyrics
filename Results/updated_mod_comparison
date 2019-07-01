@@ -1,0 +1,30 @@
+model comparison results plus sally models
+
+WAIC  pWAIC dWAIC weight      SE  dSE
+bb_neg_full       359470.2 1459.3   0.0   0.77 1442.16   NA
+bb_neg_h3         359472.8 1460.6   2.5   0.22 1442.17 2.90
+bb_neg_full_sally 359479.6 1462.3   9.4   0.01 1442.21 2.56
+bb_neg_null       359482.2 1460.2  11.9   0.00 1442.19 7.87
+bb_neg_h1         359488.9 1461.4  18.7   0.00 1442.21 7.82
+bb_neg_h2         359493.1 1462.0  22.9   0.00 1442.20 7.76
+
+WAIC  pWAIC dWAIC weight      SE  dSE
+bb_pos_h1         646942.5 1629.3   0.0   0.79 1677.00   NA
+bb_pos_null       646946.3 1633.8   3.8   0.12 1676.99 3.26
+bb_pos_full       646947.9 1631.3   5.4   0.05 1676.93 2.34
+bb_pos_h2         646948.8 1633.4   6.3   0.03 1677.01 2.89
+bb_pos_full_sally 646952.2 1628.4   9.8   0.01 1676.96 3.81
+
+WAIC  pWAIC dWAIC weight      SE  dSE
+mxm_neg_null       6602738 9361.2   0.0      1 6057.61   NA
+mxm_neg_h2         6602754 9365.0  15.8      0 6057.52 4.62
+mxm_neg_h1         6602763 9369.7  24.8      0 6057.55 4.78
+mxm_neg_full_sally 6602767 9368.2  28.8      0 6057.54 5.44
+mxm_neg_full       6602787 9380.7  48.6      0 6057.53 4.62
+
+WAIC  pWAIC dWAIC weight      SE  dSE
+mxm_pos_null       9481478 9388.5   0.0      1 6651.86   NA
+mxm_pos_full_sally 9481500 9387.0  22.0      0 6651.79 5.62
+mxm_pos_h2         9481502 9394.0  24.5      0 6651.80 5.07
+mxm_pos_h1         9481503 9397.8  25.2      0 6651.80 4.73
+mxm_pos_full       9481518 9399.9  39.8      0 6651.89 5.04
