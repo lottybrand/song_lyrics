@@ -172,7 +172,7 @@ bb_pos_full <- map2stan(
   constraints=list(sigma_y="lower=0", sigma_a="lower=0"), control=list( adapt_delta=0.99, max_treedepth=13))
 
 print("finished Full")
-plot(precis(bb_pos_full), pars=c("bs","bp"), labels=c("Prestige","Success"), xlab="Estimate")
+plot(precis(bb_pos_full), pars=c("bs","bp"), labels=c("Prestige bias","Success bias"), xlab="Estimate")
 ############################################################
 # NEGATIVE EMOTIONS
 
