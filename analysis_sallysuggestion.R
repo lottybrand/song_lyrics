@@ -172,7 +172,8 @@ bb_pos_full <- map2stan(
   constraints=list(sigma_y="lower=0", sigma_a="lower=0"), control=list( adapt_delta=0.99, max_treedepth=13))
 
 print("finished Full")
-plot(precis(bb_pos_full), pars=c("bs","bp"), labels=c("Prestige bias","Success bias"), xlab="Estimate")
+fig2a<- plot(precis(bb_pos_full_original), pars=c("bs","bp"), labels=c("Success bias","Prestige bias"), xlab="Estimate")
+fig2b <- plot(precis(bb_pos_full), pars=c("bs","bp","ba"), labels=c("Success bias","Prestige bias","Unbiased transmission"), xlab="Estimate")
 ############################################################
 # NEGATIVE EMOTIONS
 
@@ -260,6 +261,10 @@ print("finished neg Full")
 
 precis(bb_neg_full)
 plot(precis(bb_neg_full), pars=c("bs","bp","bc"), labels=c("Chart Position","Prestige","Success"), xlab="Estimate")
+fig3a<- plot(precis(bb_neg_full_original), pars=c("bs","bp","bc"), labels=c("Success bias","Prestige bias","Chart Position"), xlab="Estimate")
+fig3b <- plot(precis(bb_neg_full), pars=c("bs","bp","bc","bna"), labels=c("Success bias","Prestige bias","Content Bias","Unbiased transmission"), xlab="Estimate")
+
+plot_grid(fig3a, fig3b, labels=c("A","B"))
 
 
 ########################################################
@@ -394,6 +399,10 @@ mxm_pos_full <- map2stan(
 origFin<- Sys.time()
 
 plot(precis(mxm_pos_full), pars=c("bs","bp"), labels=c("Prestige","Success"), xlab="Estimate")
+fig4a<- plot(precis(mxm_pos_full_original), pars=c("bs","bp"), labels=c("Success bias","Prestige bias"), xlab="Estimate")
+fig4b <- plot(precis(mxm_pos_full), pars=c("bs","bp","ba"), labels=c("Success bias","Prestige bias","Unbiased transmission"), xlab="Estimate")
+
+
 #####################################################
 # NEGATIVE EMOTIONS
 
@@ -477,5 +486,9 @@ origFin3<-Sys.time()
 
 print("finished mxm_neg_full")
 plot(precis(mxm_neg_full), pars=c("bs","bp"), labels=c("Prestige","Success"), xlab="Estimate")
+fig5a<- plot(precis(mxm_neg_full_original), pars=c("bs","bp"), labels=c("Success bias","Prestige bias"), xlab="Estimate")
+fig5b <- plot(precis(mxm_neg_full), pars=c("bs","bp","bna"), labels=c("Success bias","Prestige bias","Unbiased transmission"), xlab="Estimate")
+
+
 #####
 
